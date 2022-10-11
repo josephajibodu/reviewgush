@@ -1,6 +1,8 @@
 import { Box, Button, Flex, Heading, HStack, Icon, Image, Link, ListItem, Text, UnorderedList, VStack } from '@chakra-ui/react'
 import type { NextPage } from 'next'
+import CallToAction from '../components/CallToAction'
 import Checklist from '../components/Checklist'
+import NewsletterBox from '../components/NewsletterBox'
 
 const Home: NextPage = () => {
   return (
@@ -70,24 +72,9 @@ const Home: NextPage = () => {
         </Box>
       </HStack>
 
-      <Box padding='20'>
-        <Flex bgColor='orange.500' padding='8' rounded='2xl' color='white'>
-          <VStack align='start'>
-            <Text>Get 30-day free trial</Text>
-            <Heading>Enjoy the benefit of trusting us first</Heading>
-          </VStack>
-          <Flex flexDir='column' flexGrow={1}>
-            <HStack justify='end'>
-              <Button minWidth='30' bgColor='orange.300' _hover={{ bgColor: 'orange.400' }}>Get Started</Button>
-              <Button minWidth='30' bgColor='white' color='gray.700' _hover={{ bgColor: 'white' }}>Let{'\''}s Talk</Button>
-            </HStack>
-            <HStack justify='end' mt='2'>
-              <Checklist as='li'>All Pro Features</Checklist>
-              <Checklist as='li'>30 days </Checklist>
-            </HStack>
-          </Flex>
-        </Flex>
-      </Box>
+      <Flex padding='20' justify='center'>
+        <NewsletterBox />
+      </Flex>
 
     </Box>
   )
