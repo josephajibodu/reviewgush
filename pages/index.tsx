@@ -18,7 +18,7 @@ const Home: NextPage = () => {
           <Text mt={2} color="gray.500" fontSize={'xl'} fontWeight="light">
             Reviews from satisfied clients/customers can now be collected easily with ReviewGush using video, images, text, ratings, or even a combination of all four formats.
           </Text>
-          <Button mt={6} rounded={'xl'} minH={12} minW={24} bg="orange.500" color='white' _hover={{ bg: 'orange.600' }}>Start Here</Button>
+          <Button as='a' mt={6} rounded={'xl'} minH={12} minW={24} bg="orange.500" color='white' _hover={{ bg: 'orange.600' }} href="#get-started">Start Here</Button>
         </Flex>
         <Image src='/images/developer.svg' alt='Dan Abramov' width={"600px"} />
       </VStack>
@@ -73,7 +73,7 @@ const Home: NextPage = () => {
       </HStack>
 
       <Flex padding='20' justify='center'>
-        <NewsletterBox />
+        <NewsletterBox id='get-started' />
       </Flex>
 
     </Box>

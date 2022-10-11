@@ -1,9 +1,9 @@
-import { Box, Button, Flex, Heading, HStack, Input, InputGroup, InputRightElement, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, Heading, HStack, Input, InputGroup, InputRightElement, StackProps, Text } from '@chakra-ui/react'
 import ThreeStrokes from './BackgroundPatterns/ThreeStrokes'
 
-export default function NewsletterBox() {
+export default function NewsletterBox({...props}: StackProps) {
   return (
-    <Flex overflow='hidden' pos='relative' flexDir='column' align='center' maxWidth='3xl' paddingX='14' paddingY='20' color='white' border='2px' rounded='2xl' textAlign='center' bgColor='green.500'>
+    <Flex overflow='hidden' pos='relative' flexDir='column' align='center' maxWidth='3xl' paddingX='14' paddingY='20' color='white' border='2px' rounded='2xl' textAlign='center' bgColor='green.500' {...props}>
       <Heading fontSize='12px' color='white' textTransform='uppercase'>Enjoy 30 days free trial</Heading>
       <Heading fontSize='4xl' color='white'>Sign Up Now</Heading>
       <Text color='white.600'>Be the first to receive the good news from us when we launch. For the first 100 signups, we are giving out 30 days free trial.</Text>
