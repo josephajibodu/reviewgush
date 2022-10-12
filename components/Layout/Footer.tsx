@@ -2,8 +2,10 @@ import {
   Box,
   chakra,
   Container,
+  Heading,
   Stack,
   Text,
+  useBreakpointValue,
   useColorModeValue,
   VisuallyHidden,
 } from '@chakra-ui/react';
@@ -73,7 +75,16 @@ export default function Footer() {
         spacing={4}
         justify={{ base: 'center', md: 'space-between' }}
         align={{ base: 'center', md: 'center' }}>
-        <Logo />
+        {/* <Logo /> */}
+        <Heading
+            fontSize='md'
+            bgGradient='linear(to-l, orange.500, green.400)'
+            bgClip='text'
+            textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
+            fontFamily={'heading'}
+          >
+            REVIEWGUSH
+          </Heading>
         <Text>© 2022 Reviewgush. All rights reserved</Text>
         <Stack direction={'row'} spacing={6}>
           <SocialButton label={'Twitter'} href={'#'}>

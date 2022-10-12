@@ -14,6 +14,7 @@ import {
   useColorModeValue,
   useBreakpointValue,
   useDisclosure,
+  Heading,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
@@ -32,7 +33,7 @@ export default function Header() {
         color={useColorModeValue('gray.600', 'white')}
         minH={'60px'}
         py={{ base: 2 }}
-        px={{ base: 8}}
+        px={{ base: 8 }}
         borderBottom={1}
         borderStyle={'solid'}
         borderColor={useColorModeValue('gray.200', 'gray.900')}
@@ -51,12 +52,15 @@ export default function Header() {
           />
         </Flex>
         <Flex flex={{ base: 1 }} justify={{ base: 'center', md: 'start' }}>
-          <Text
+          <Heading
+            fontSize='md'
+            bgGradient='linear(to-l, orange.500, green.400)'
+            bgClip='text'
             textAlign={useBreakpointValue({ base: 'center', md: 'left' })}
             fontFamily={'heading'}
-            color={useColorModeValue('gray.800', 'white')}>
-            Reviewgush
-          </Text>
+          >
+            REVIEWGUSH
+          </Heading>
 
           <Flex display={{ base: 'none', md: 'flex' }} ml={10}>
             <DesktopNav />
@@ -68,7 +72,7 @@ export default function Header() {
           justify={'flex-end'}
           direction={'row'}
           spacing={6}>
-         
+
           <Button
             as={'a'}
             display={{ base: 'none', md: 'inline-flex' }}
