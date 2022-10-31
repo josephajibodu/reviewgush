@@ -24,7 +24,7 @@ const Home: NextPage = () => {
       </VStack>
 
       <Stack direction={['column', 'row']} px={[8, 20]} py='8' spacing='6' bgColor='white'>
-        <Box>
+        <Box width={['100%', '60%']}>
           <Heading fontSize='sm' color='orange.500' textTransform='uppercase' fontWeight='medium'>Collect</Heading>
           <Heading lineHeight='1' color='grey.700' fontSize='5xl' mb='2'>Get feedbacks easily</Heading>
           <Text color='gray.500'>Obtain feedback easily from your satisfied customers/clients about what they like best about your products/services. You can build your collection form in less than a minute.</Text>
@@ -35,16 +35,16 @@ const Home: NextPage = () => {
           </UnorderedList>
           <Link href='#' color='green.400'>Learn More</Link>
         </Box>
-        <Box>
-          <Image src='/images/meeting-feature-1.png' alt='Feature 1' />
+        <Box width={['100%', '40%']}>
+          <Image src='/images//meeting-feature-1.png' alt='Feature 1' />
         </Box>
       </Stack>
 
       <Stack direction={['column', 'row']} px={[8, 20]} py='8' spacing='6' bgColor='white'>
-        <Box>
+        <Box width={['100%', '40%']}>
           <Image src='/images/meeting-feature-2.png' alt='Feature 2' />
         </Box>
-        <Box>
+        <Box width={['100%', '60%']}>
           <Heading fontSize='sm' color='orange.500' textTransform='uppercase' fontWeight='medium'>Manage</Heading>
           <Heading lineHeight='1'  color='grey.700' fontSize='5xl' mb='2'>Manage reviews and integrations</Heading>
           <Text color='gray.500'>You don{'\''}t have to open an Excel sheet to gather your feedback. ReviewGush gives you a powerful dashboard to manage all your reviews across all platforms.</Text>
@@ -57,7 +57,7 @@ const Home: NextPage = () => {
       </Stack>
 
       <Stack direction={['column', 'row']} px={[8, 20]} py='8' spacing='6' bgColor='white'>
-        <Box>
+        <Box width={['100%', '60%']}>
           <Heading fontSize='sm' color='orange.500' textTransform='uppercase' fontWeight='medium'>Share</Heading>
           <Heading lineHeight='1' color='grey.700' fontSize='5xl' mb='2'>Share and Display your reviews</Heading>
           <Text color='gray.500'>Rather than sending WhatsApp screenshots of customers{'\''}/clients{'\''} reviews, share the reviews in a more organized format. With ReviewGush, you can share your collected reviews in a variety of formats, including designs.</Text>
@@ -67,8 +67,8 @@ const Home: NextPage = () => {
           </UnorderedList>
           <Link href='#' color='green.400'>Learn More</Link>
         </Box>
-        <Box>
-          <Image src='/images/meeting-feature-2.png' alt='Feature 2' />
+        <Box width={['100%', '40%']}>
+          <Image src='/images/meeting-feature-3.png' alt='Feature 2' />
         </Box>
       </Stack>
 
