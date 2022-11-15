@@ -36,13 +36,13 @@ const Home: NextPage = () => {
           <Link href='#' color='green.400'>Learn More</Link>
         </Box>
         <Box width={['100%', '40%']}>
-          <Image src='/images//meeting-feature-1.png' alt='Feature 1' />
+          <Image src='/images/collect-1.svg' alt='Collect and Gather all your reviews in one place' />
         </Box>
       </Stack>
 
       <Stack direction={['column', 'row']} px={[8, 20]} py='8' spacing='6' bgColor='white'>
         <Box width={['100%', '40%']}>
-          <Image src='/images/meeting-feature-2.png' alt='Feature 2' />
+          <Image src='/images/organize.svg' alt='Manage and Organize reviews' />
         </Box>
         <Box width={['100%', '60%']}>
           <Heading fontSize='sm' color='orange.500' textTransform='uppercase' fontWeight='medium'>Manage</Heading>
@@ -68,7 +68,7 @@ const Home: NextPage = () => {
           <Link href='#' color='green.400'>Learn More</Link>
         </Box>
         <Box width={['100%', '40%']}>
-          <Image src='/images/meeting-feature-3.png' alt='Feature 2' />
+          <Image src='/images/share-online.svg' alt='Share reviews online' />
         </Box>
       </Stack>
 
