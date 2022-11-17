@@ -30,6 +30,7 @@ const Home: NextPage = () => {
       </VStack>
 
       <Stack direction={['column', 'row']} px={[8, 20]} py='8' spacing='6' bgColor='white'>
+         {/* @ts-ignore no problem in operation, although type error appears. */}
         <ChakraBox transition={{ duration: 0.5 }} initial={{ translateX: -600, opacity: 0 }} whileInView={{ translateX: 0, opacity: 1 }} width={['100%', '60%']}>
           <Heading fontSize='sm' color='orange.500' textTransform='uppercase' fontWeight='medium'>Collect</Heading>
           <Heading lineHeight='1' color='grey.700' fontSize='5xl' mb='2'>Get feedbacks easily</Heading>
@@ -41,15 +42,18 @@ const Home: NextPage = () => {
           </UnorderedList>
           <Link href='#' color='green.400'>Learn More</Link>
         </ChakraBox>
+         {/* @ts-ignore no problem in operation, although type error appears. */}
         <ChakraBox transition={{ duration: 0.8 }} initial={{ translateX: -50, opacity: 0 }} whileInView={{ translateX: 0, opacity: 1 }} width={['100%', '40%']}>
           <Image src='/images/collect-1.svg' alt='Collect and Gather all your reviews in one place' />
         </ChakraBox>
       </Stack>
 
       <Stack direction={['column', 'row']} px={[8, 20]} py='8' spacing='6' bgColor='white'>
+         {/* @ts-ignore no problem in operation, although type error appears. */}
         <ChakraBox transition={{ duration: 0.8 }} initial={{ translateX: -50, opacity: 0 }} whileInView={{ translateX: 0, opacity: 1 }}  width={['100%', '40%']}>
           <Image src='/images/organize.svg' alt='Manage and Organize reviews' />
         </ChakraBox>
+        {/* @ts-ignore no problem in operation, although type error appears. */}
         <ChakraBox transition={{ duration: 0.5 }} initial={{ translateX: -600, opacity: 0 }} whileInView={{ translateX: 0, opacity: 1 }} width={['100%', '60%']}>
           <Heading fontSize='sm' color='orange.500' textTransform='uppercase' fontWeight='medium'>Manage</Heading>
           <Heading lineHeight='1'  color='grey.700' fontSize='5xl' mb='2'>Manage reviews and integrations</Heading>
@@ -63,6 +67,7 @@ const Home: NextPage = () => {
       </Stack>
 
       <Stack direction={['column', 'row']} px={[8, 20]} py='8' spacing='6' bgColor='white'>
+         {/* @ts-ignore no problem in operation, although type error appears. */}
         <ChakraBox transition={{ duration: 0.5 }} initial={{ translateX: -600, opacity: 0 }} whileInView={{ translateX: 0, opacity: 1 }} width={['100%', '60%']}>
           <Heading fontSize='sm' color='orange.500' textTransform='uppercase' fontWeight='medium'>Share</Heading>
           <Heading lineHeight='1' color='grey.700' fontSize='5xl' mb='2'>Share and Display your reviews</Heading>
@@ -73,6 +78,7 @@ const Home: NextPage = () => {
           </UnorderedList>
           <Link href='#' color='green.400'>Learn More</Link>
         </ChakraBox>
+         {/* @ts-ignore no problem in operation, although type error appears. */}
         <ChakraBox transition={{ duration: 0.8 }} initial={{ translateX: -50, opacity: 0 }} whileInView={{ translateX: 0, opacity: 1 }}  width={['100%', '40%']}>
           <Image src='/images/share-online.svg' alt='Share reviews online' />
         </ChakraBox>
