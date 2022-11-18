@@ -50,9 +50,12 @@ const Home: NextPage = () => {
             flexDirection={['column', 'row']}
             justifyContent={'center'}
             color="gray.700">
-            <ChakraHeading whileHover={{ translateY: -8 }} cursor="pointer" lineHeight='1.2' fontSize={['7xl', '5xl']} fontWeight={'extrabold'}>Collect.</ChakraHeading>
-            <ChakraHeading whileHover={{ translateY: -8 }} cursor="pointer" lineHeight='1.2' fontSize={['7xl', '5xl']} bgGradient='linear(to-l, orange.500, green.400)' bgClip='text' fontWeight={'extrabold'}>Manage.</ChakraHeading>
-            <ChakraHeading whileHover={{ translateY: -8 }} cursor="pointer" lineHeight='1.2' fontSize={['7xl', '5xl']} fontWeight={'extrabold'}>Share.</ChakraHeading>
+            {/* @ts-ignore no problem in operation, although type error appears. */}
+            <ChakraHeading whileHover={{ translateY: -8 }} transition={{ type: 'spring', stiffness: 500 }} cursor="pointer" lineHeight='1.2' fontSize={['7xl', '5xl']} fontWeight={'extrabold'}>Collect.</ChakraHeading>
+            {/* @ts-ignore no problem in operation, although type error appears. */}
+            <ChakraHeading whileHover={{ translateY: -8 }} transition={{ type: 'spring', stiffness: 500 }} cursor="pointer" lineHeight='1.2' fontSize={['7xl', '5xl']} bgGradient='linear(to-l, orange.500, green.400)' bgClip='text' fontWeight={'extrabold'}>Manage.</ChakraHeading>
+            {/* @ts-ignore no problem in operation, although type error appears. */}
+            <ChakraHeading whileHover={{ translateY: -8 }} transition={{ type: 'spring', stiffness: 500 }} cursor="pointer" lineHeight='1.2' fontSize={['7xl', '5xl']} fontWeight={'extrabold'}>Share.</ChakraHeading>
           </ChakraStack>
           {/* <Heading color="green.400">Collecting, Managing and Sharing reviews from your clients has been made easier with Reviewgush</Heading> */}
           <Text mt={2} color="gray.500" fontSize={'xl'} fontWeight="light">
