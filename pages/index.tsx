@@ -66,7 +66,7 @@ const Home: NextPage = () => {
         <Image src='/images/developer.svg' alt='Dan Abramov' width={"600px"} />
       </VStack>
 
-      <Stack direction={['column', 'row']} px={[8, 20]} py='8' spacing='6' bgColor='white'>
+      <Stack direction={['column', 'row']} px={[8, 20]} py='8' spacing='16' bgColor='white'>
         {/* @ts-ignore no problem in operation, although type error appears. */}
         <ChakraBox transition={{ duration: 0.5 }} initial={{ translateX: -200, opacity: 0 }} whileInView={{ translateX: 0, opacity: 1 }} width={['100%', '60%']}>
           <Heading fontSize='sm' color='orange.500' textTransform='uppercase' fontWeight='medium'>Collect</Heading>
@@ -85,7 +85,7 @@ const Home: NextPage = () => {
         </ChakraBox>
       </Stack>
 
-      <Stack direction={['column-reverse', 'row']} px={[8, 20]} py='8' spacing='6' bgColor='white'>
+      <Stack direction={['column-reverse', 'row']} px={[8, 20]} py='8' spacing='16' bgColor='white'>
         {/* @ts-ignore no problem in operation, although type error appears. */}
         <ChakraBox transition={{ duration: 0.8 }} initial={{ translateX: -50, opacity: 0 }} whileInView={{ translateX: 0, opacity: 1 }} width={['100%', '40%']}>
           <Image src='/images/organize.svg' alt='Manage and Organize reviews' />
@@ -103,7 +103,7 @@ const Home: NextPage = () => {
         </ChakraBox>
       </Stack>
 
-      <Stack direction={['column', 'row']} px={[8, 20]} py='8' spacing='6' bgColor='white'>
+      <Stack direction={['column', 'row']} px={[8, 20]} py='8' spacing='16' bgColor='white'>
         {/* @ts-ignore no problem in operation, although type error appears. */}
         <ChakraBox transition={{ duration: 0.5 }} initial={{ translateX: -300, opacity: 0 }} whileInView={{ translateX: 0, opacity: 1 }} width={['100%', '60%']}>
           <Heading fontSize='sm' color='orange.500' textTransform='uppercase' fontWeight='medium'>Share</Heading>
