@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, HStack, Input, InputGroup, InputRightElement, StackProps, Text, useToast } from '@chakra-ui/react'
+import { Box, Button, CircularProgress, Flex, Heading, HStack, Input, InputGroup, InputRightElement, StackProps, Text, useToast } from '@chakra-ui/react'
 import { useMutation, useQuery } from '@tanstack/react-query';
 import React, { useState } from 'react';
 import ThreeStrokes from './BackgroundPatterns/ThreeStrokes'
@@ -24,7 +24,7 @@ export default function NewsletterBox({ ...props }: StackProps) {
     return response.json();
   }
 
-  const { mutateAsync, mutate } = useMutation({
+  const { mutateAsync, mutate, isLoading } = useMutation({
     mutationFn: handleSubscriptionRequest,
   });
 
@@ -32,6 +32,8 @@ export default function NewsletterBox({ ...props }: StackProps) {
 
   const subscribeToNewsletter = async (e: React.FormEvent<HTMLDivElement>) => {
     e.preventDefault();
+
+    if (isLoading) return;
 
     if (!emailAddress) {
       return toast({
@@ -55,7 +57,7 @@ export default function NewsletterBox({ ...props }: StackProps) {
         duration: 5000,
         position: 'top'
       });
-  
+
       setEmailAddress("");
 
     } catch (error) {
@@ -71,7 +73,7 @@ export default function NewsletterBox({ ...props }: StackProps) {
       });
     }
 
-    
+
   }
 
   return (
@@ -81,7 +83,10 @@ export default function NewsletterBox({ ...props }: StackProps) {
       <Text color='white.600'>Be the first to receive the good news from us when we launch. For the first 100 signups, we are giving out 30 days free trial.</Text>
       <Flex as={'form'} onSubmit={subscribeToNewsletter} pos='relative' align='center' minWidth='300px' maxWidth='lg' marginTop='6'>
         <Input type={"email"} required value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} placeholder='Enter your email' outline='0' minHeight='12' pr='32' border='2px' borderColor='gray.300' _placeholder={{ color: 'gray.200' }} focusBorderColor='gray.300' />
-        <Button type='submit' pos='absolute' right='1' bgColor='orange.500' _hover={{ bgColor: 'orange.600' }} zIndex="20">Sign Me Up</Button>
+        <Button type='submit' pos='absolute' right='1' bgColor='orange.500' _hover={{ bgColor: 'orange.600' }} zIndex="20">
+          {isLoading && <CircularProgress isIndeterminate value={100} size='24px' color={"green.300"} m={"4"} />}
+          {!isLoading &&  'Sign Me Up'}
+        </Button>
       </Flex>
       <ThreeStrokes pos='absolute' transform='rotate(45deg)' bottom='60%' left='85%' />
       <ThreeStrokes pos='absolute' transform='rotate(45deg)' top='60%' right='85%' />
