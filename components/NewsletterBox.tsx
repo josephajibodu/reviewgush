@@ -8,7 +8,8 @@ export default function NewsletterBox({ ...props }: StackProps) {
   const [emailAddress, setEmailAddress] = useState<string>();
 
   const handleSubscriptionRequest = async (data: { email: string }) => {
-    const response = await fetch('/api/subscribeUser', {
+    
+    const response = await fetch(`/api/get-notified`, {
       body: JSON.stringify({ email: emailAddress }),
       headers: {
         'Content-Type': 'application/json'
@@ -25,9 +26,6 @@ export default function NewsletterBox({ ...props }: StackProps) {
 
   const { mutateAsync, mutate } = useMutation({
     mutationFn: handleSubscriptionRequest,
-    onSuccess: () => {
-
-    }
   });
 
 
@@ -62,7 +60,7 @@ export default function NewsletterBox({ ...props }: StackProps) {
 
     } catch (error) {
       console.log(error);
-      
+
       toast({
         title: "Email Subscription Error",
         description: "An unknow error occured",
