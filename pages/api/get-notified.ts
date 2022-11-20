@@ -54,12 +54,13 @@ const handler =  async (req: NextApiRequest, res: NextApiResponse) => {
       // Check if the user has already been added
       if (finalRes && finalRes.title == 'Member Exists') {
         return res.status(200).json({ 
+          data: finalRes,
           message: `${email} has already been added to our waiting list.`
         });
       }
 
       return res.status(400).json({
-        error: finalRes,
+        data: finalRes,
         message: `There was an error subscribing to the newsletter. Hit us up special@reviewgush.com and I'll add you the old fashioned way :(.`,
       });
     }
