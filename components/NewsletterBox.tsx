@@ -8,7 +8,7 @@ export default function NewsletterBox({ ...props }: StackProps) {
   const [emailAddress, setEmailAddress] = useState<string>();
 
   const handleSubscriptionRequest = async (data: { email: string }) => {
-    
+
     const response = await fetch(`/api/get-notified`, {
       body: JSON.stringify({ email: emailAddress }),
       headers: {
@@ -17,7 +17,7 @@ export default function NewsletterBox({ ...props }: StackProps) {
       method: 'POST'
     });
 
-    if (response.ok) {
+    if (!response.ok) {
       throw new Error(response.statusText);
     }
 
