@@ -1,5 +1,6 @@
-import { Box, Button, Flex, FormControl, FormErrorMessage, FormHelperText, FormLabel, Heading, Input, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, FormControl, FormErrorMessage, FormHelperText, FormLabel, Heading, Input, Link, Text } from '@chakra-ui/react'
 import { Form, Formik } from 'formik'
+import NextLink from 'next/link'
 import React from 'react'
 import { FaApple, FaGoogle } from 'react-icons/fa'
 
@@ -45,6 +46,8 @@ export default function Register() {
             </Form>
           )}
         </Formik>
+
+        <Link _hover={{ cursor: 'pointer' }} as={NextLink} href={"/sign-in"}><Text>I have an account. Sign In Now</Text></Link>
 
         <Flex width={"full"} align={"center"} my="4">
           <Box h={"1px"} width={"50%"} bgColor={"orange.500"} />
