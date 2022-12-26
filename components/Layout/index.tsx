@@ -4,6 +4,7 @@ import React from 'react'
 import Footer from './Footer'
 import Header from './Header'
 import siteConfig from '../../config/site.config'
+import LoadingBar from 'react-top-loading-bar'
 
 export default function Layout({ children }: { children: JSX.Element }) {
   const color = "##FFFFFF";
@@ -25,13 +26,13 @@ export default function Layout({ children }: { children: JSX.Element }) {
 
       <Head>
         <title>{title}</title>
-        
+
         {/* meta */}
         <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
         <meta name="robots" content="index, follow" />
         <meta name="description" content={des} />
-        <meta name="keywords" content={keywords}/>
-        <meta name="author" content="Joseph O. Ajibodu"/>
+        <meta name="keywords" content={keywords} />
+        <meta name="author" content="Joseph O. Ajibodu" />
 
         {/* Favicon */}
         <link rel="icon" href="/favicon.ico" />
@@ -40,7 +41,7 @@ export default function Layout({ children }: { children: JSX.Element }) {
         <link rel="icon" type="image/png" sizes="16x16" href="/favicon-16x16.png" />
         <link rel="mask-icon" href="/safari-pinned-tab.svg" color={`${secondary}`} />
         <meta name="msapplication-TileColor" content={`${primary}`} />
-        
+
 
         {/* Facebook Meta Tags */}
         <meta property="og:url" content={url} />
@@ -56,7 +57,7 @@ export default function Layout({ children }: { children: JSX.Element }) {
         <meta name="twitter:title" content={title} />
         <meta name="twitter:description" content={des} />
         <meta name="twitter:image" content={og_image} />
-    
+
         {/* Open Graph data */}
         <meta property="og:title" content={title} />
         <meta property="og:type" content="website" />
@@ -64,10 +65,10 @@ export default function Layout({ children }: { children: JSX.Element }) {
         <meta property="og:image" content={og_image} />
         <meta property="og:description" content={des} />
         <meta property="og:site_name" content={siteConfig.title} />
-        
+
         {/* Browser Color */}
-	      <meta name="theme-color" content={color} />
-	      <meta name="msapplication-navbutton-color" content={color} />
+        <meta name="theme-color" content={color} />
+        <meta name="msapplication-navbutton-color" content={color} />
         {/* Do not add <script> tags using next/head 
         See more info here: https://nextjs.org/docs/messages/no-script-tags-in-head-component  */}
       </Head>
