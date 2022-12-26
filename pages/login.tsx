@@ -21,7 +21,7 @@ export default function Login() {
 
         <Button variant={'outline'} my={3} width={"full"} colorScheme="green">Sign In</Button>
 
-        <Flex width={"full"} align={"center"}>
+        <Flex width={"full"} align={"center"} my="4">
           <Box h={"1px"} width={"50%"} bgColor={"orange.500"} />
           <Text mx={2} color={"orange.500"}>OR</Text>
           <Box h={"1px"} width={"50%"} bgColor={"orange.500"} />
