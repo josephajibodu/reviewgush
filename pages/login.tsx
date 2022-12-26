@@ -27,7 +27,7 @@ export default function Login() {
           <Box h={"1px"} width={"50%"} bgColor={"orange.500"} />
         </Flex>
 
-        <Button leftIcon={<FaGoogle />} variant={'outline'} my={3} width={"full"} colorScheme="blackAlpha">Sign In with Google</Button>
+        <Button leftIcon={<FaGoogle />} variant={'outline'} my={3} width={"full"} colorScheme="blue">Sign In with Google</Button>
         <Button leftIcon={<FaApple />} variant={'outline'} my={3} width={"full"} colorScheme="blackAlpha">Sign In with Apple</Button>
       </Flex>
 
