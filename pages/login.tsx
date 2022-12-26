@@ -1,4 +1,5 @@
 import { Box, Button, Flex, FormControl, FormErrorMessage, FormHelperText, FormLabel, Heading, Input, Text } from '@chakra-ui/react'
+import { Form, Formik } from 'formik'
 import React from 'react'
 import { FaApple, FaGoogle } from 'react-icons/fa'
 
@@ -10,16 +11,25 @@ export default function Login() {
       <Flex align={"center"} justify={"center"} direction="column" width={"xs"}>
         <Heading color={"green.400"} mb={3} fontWeight="light">Sign In</Heading>
 
-        <FormControl>
-          <Input type='email' name='email' placeholder='Your Email Address' />
-          <FormErrorMessage>Email is required.</FormErrorMessage>
-        </FormControl>
+        <Formik
+          initialValues={{ email: "", password: "" }}
+          onSubmit={(values) => console.log(values)}
+        >
+          {({handleChange, handleBlur, values}) => (
+            <Form style={{ width: "100%" }}>
+              <FormControl>
+                <Input type='email' name='email' placeholder='Your Email Address' value={values.email} onChange={handleChange} onBlur={handleBlur} />
+                <FormErrorMessage>Email is required.</FormErrorMessage>
+              </FormControl>
 
-        <FormControl mt={2}>
-          <Input type='password' name='password' placeholder='Your password...' />
-        </FormControl>
+              <FormControl mt={2}>
+                <Input type='password' name='password' placeholder='Your password...' value={values.password} onChange={handleChange} onBlur={handleBlur} />
+              </FormControl>
 
-        <Button variant={'outline'} my={3} width={"full"} colorScheme="green">Sign In</Button>
+              <Button type="submit" variant={'outline'} my={3} width={"full"} colorScheme="green">Sign In</Button>
+            </Form>
+          )}
+        </Formik>
 
         <Flex width={"full"} align={"center"} my="4">
           <Box h={"1px"} width={"50%"} bgColor={"orange.500"} />
