@@ -5,6 +5,8 @@ import { FaApple, FaGoogle } from 'react-icons/fa'
 import NextLink from 'next/link'
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../config/firebase.config'
+import { useDispatch, useSelector } from 'react-redux'
+import { RootState } from '../store'
 
 interface LoginValues {
   email:  string;
@@ -13,13 +15,11 @@ interface LoginValues {
 
 export default function Login() {
 
+  const { user } = useSelector((state: RootState) => state.auth);
+  const dispatch = useDispatch()
+
   const logUserIn = async (values : LoginValues) => {
-    try {
-      const credentials = await signInWithEmailAndPassword(auth, values.email, values.password);
-      console.log("User logged in: ", credentials);
-    } catch (error) {
-      console.log(error)
-    }
+    
   }
 
   useEffect(() => {
