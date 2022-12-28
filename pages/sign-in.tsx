@@ -1,4 +1,4 @@
-import { Box, Button, Flex, FormControl, FormErrorMessage, FormHelperText, FormLabel, Heading, Input, Link, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, FormControl, FormErrorMessage, FormHelperText, FormLabel, Heading, Input, Link, Text, useToast } from '@chakra-ui/react'
 import { Form, Formik } from 'formik'
 import React, { useEffect } from 'react'
 import { FaApple, FaGoogle } from 'react-icons/fa'
@@ -6,20 +6,38 @@ import NextLink from 'next/link'
 import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
 import { auth } from '../config/firebase.config'
 import { useDispatch, useSelector } from 'react-redux'
-import { RootState } from '../store'
+import { AppDispatch, RootState } from '../store'
+import { logUserIn } from '../features/auth/auth'
 
 interface LoginValues {
-  email:  string;
+  email: string;
   password: string;
 }
 
 export default function Login() {
 
-  const { user } = useSelector((state: RootState) => state.auth);
-  const dispatch = useDispatch()
+  const dispatch = useDispatch<AppDispatch>();
+  const { user, status } = useSelector((state: RootState) => state.auth);
+  const toast = useToast();
 
-  const logUserIn = async (values : LoginValues) => {
-    
+  const submitLogin = async (values: LoginValues) => {
+    dispatch(logUserIn({ email: values.email, password: values.password }))
+      .unwrap()
+      .then((response) => {
+        console.log("Login Dispatch Call response: ", response);
+        toast({
+          title: "Account Login",
+          description: `Login successful.`,
+          status: "success",
+        })
+      })
+      .catch((error) => {
+        toast({
+          title: "Account Login",
+          description: `${error.message}`,
+          status: "error",
+        })
+      })
   }
 
   useEffect(() => {
@@ -35,7 +53,7 @@ export default function Login() {
       unsubscribeAuthStateChanged();
     }
   })
-  
+
   return (
     <Flex align="center" justify="center" h={"100vh"}>
 
@@ -45,9 +63,9 @@ export default function Login() {
 
         <Formik
           initialValues={{ email: "", password: "" }}
-          onSubmit={logUserIn}
+          onSubmit={submitLogin}
         >
-          {({handleChange, handleBlur, values}) => (
+          {({ handleChange, handleBlur, values }) => (
             <Form style={{ width: "100%" }}>
               <FormControl>
                 <Input type='email' name='email' placeholder='Your Email Address' value={values.email} onChange={handleChange} onBlur={handleBlur} />
@@ -58,11 +76,11 @@ export default function Login() {
                 <Input type='password' name='password' placeholder='Your password...' value={values.password} onChange={handleChange} onBlur={handleBlur} />
               </FormControl>
 
-              <Button type="submit" variant={'outline'} my={3} width={"full"} colorScheme="green">Sign In</Button>
+              <Button isLoading={status === "loading"} disabled={status == "loading"} type="submit" variant={'outline'} my={3} width={"full"} colorScheme="green">Sign In</Button>
             </Form>
           )}
         </Formik>
-        
+
         <Link _hover={{ cursor: 'pointer' }} as={NextLink} href={"/sign-up"}><Text>Don{"'"}t have an account? Sign Up</Text></Link>
 
         <Flex width={"full"} align={"center"} my="4">

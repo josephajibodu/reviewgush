@@ -5,6 +5,9 @@ import React, { useEffect } from 'react'
 import { FaApple, FaGoogle } from 'react-icons/fa'
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../config/firebase.config'
+import { registerUser } from '../features/auth/auth'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../store'
 
 interface RegistrationValues {
   firstname: string, lastname: string, email: string, phonenumber: string, password: string, password_confirmation: string
@@ -12,13 +15,14 @@ interface RegistrationValues {
 
 export default function Register() {
 
-  const registerUser = async (values : RegistrationValues) => {
-    try {
-      const credentials = await createUserWithEmailAndPassword(auth, values.email, values.password);
-      console.log("User account created: ", credentials);
-    } catch (error) {
-      console.warn(error)
-    }
+  const dispatch = useDispatch<AppDispatch>();
+
+  const handleRegistration = async (values : RegistrationValues) => {
+    dispatch(registerUser({ email: values.email, password: values.password }))
+      .unwrap()
+      .then((response) => {
+        console.log("Login Dispatch Call response: ", response);
+      })
   }
 
   useEffect(() => {
@@ -44,7 +48,7 @@ export default function Register() {
 
         <Formik
           initialValues={{ firstname: "", lastname: "", email: "", phonenumber: "", password: "", password_confirmation: "" }}
-          onSubmit={registerUser}
+          onSubmit={handleRegistration}
         >
           {({ handleChange, handleBlur, values }) => (
             <Form style={{ width: "100%" }}>
