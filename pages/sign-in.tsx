@@ -1,10 +1,41 @@
 import { Box, Button, Flex, FormControl, FormErrorMessage, FormHelperText, FormLabel, Heading, Input, Link, Text } from '@chakra-ui/react'
 import { Form, Formik } from 'formik'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FaApple, FaGoogle } from 'react-icons/fa'
 import NextLink from 'next/link'
+import { onAuthStateChanged, signInWithEmailAndPassword } from 'firebase/auth'
+import { auth } from '../config/firebase.config'
+
+interface LoginValues {
+  email:  string;
+  password: string;
+}
 
 export default function Login() {
+
+  const logUserIn = async (values : LoginValues) => {
+    try {
+      const credentials = await signInWithEmailAndPassword(auth, values.email, values.password);
+      console.log("User logged in: ", credentials);
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  useEffect(() => {
+    const unsubscribeAuthStateChanged = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("AUth state changed: ", user);
+      } else {
+        console.log("Auth state changed [Seem user is logged out]");
+      }
+    });
+
+    return () => {
+      unsubscribeAuthStateChanged();
+    }
+  })
+  
   return (
     <Flex align="center" justify="center" h={"100vh"}>
 
@@ -14,7 +45,7 @@ export default function Login() {
 
         <Formik
           initialValues={{ email: "", password: "" }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={logUserIn}
         >
           {({handleChange, handleBlur, values}) => (
             <Form style={{ width: "100%" }}>

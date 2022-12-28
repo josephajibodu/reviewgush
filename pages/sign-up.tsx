@@ -1,10 +1,40 @@
 import { Box, Button, Flex, FormControl, FormErrorMessage, FormHelperText, FormLabel, Heading, Input, Link, Text } from '@chakra-ui/react'
 import { Form, Formik } from 'formik'
 import NextLink from 'next/link'
-import React from 'react'
+import React, { useEffect } from 'react'
 import { FaApple, FaGoogle } from 'react-icons/fa'
+import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
+import { auth } from '../config/firebase.config'
+
+interface RegistrationValues {
+  firstname: string, lastname: string, email: string, phonenumber: string, password: string, password_confirmation: string
+}
 
 export default function Register() {
+
+  const registerUser = async (values : RegistrationValues) => {
+    try {
+      const credentials = await createUserWithEmailAndPassword(auth, values.email, values.password);
+      console.log("User account created: ", credentials);
+    } catch (error) {
+      console.warn(error)
+    }
+  }
+
+  useEffect(() => {
+    const unsubscribeAuthStateChanged = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        console.log("AUth state changed: ", user);
+      } else {
+        console.log("Auth state changed [Seem user is logged out]");
+      }
+    });
+
+    return () => {
+      unsubscribeAuthStateChanged();
+    }
+  })
+
   return (
     <Flex align="center" justify="center" h={"100vh"}>
 
@@ -14,9 +44,9 @@ export default function Register() {
 
         <Formik
           initialValues={{ firstname: "", lastname: "", email: "", phonenumber: "", password: "", password_confirmation: "" }}
-          onSubmit={(values) => console.log(values)}
+          onSubmit={registerUser}
         >
-          {({handleChange, handleBlur, values}) => (
+          {({ handleChange, handleBlur, values }) => (
             <Form style={{ width: "100%" }}>
               <FormControl mt={2}>
                 <Input type='text' name='firstname' placeholder='First Name' value={values.firstname} onChange={handleChange} onBlur={handleBlur} />
@@ -25,7 +55,7 @@ export default function Register() {
               <FormControl mt={2}>
                 <Input type='text' name='lastname' placeholder='Last Name' value={values.lastname} onChange={handleChange} onBlur={handleBlur} />
               </FormControl>
-              
+
               <FormControl mt={2}>
                 <Input type='email' name='email' placeholder='Your Email Address' value={values.email} onChange={handleChange} onBlur={handleBlur} />
               </FormControl>

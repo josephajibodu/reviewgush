@@ -3,7 +3,7 @@ import Head from 'next/head'
 import React from 'react'
 import Footer from './Footer'
 import Header from './Header'
-import siteConfig from '../../config/site.config'
+import * as siteConfig from '../../config/site.config'
 import LoadingBar from 'react-top-loading-bar'
 
 export default function Layout({ children }: { children: JSX.Element }) {
