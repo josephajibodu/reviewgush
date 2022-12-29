@@ -41,17 +41,7 @@ export default function Login() {
   }
 
   useEffect(() => {
-    const unsubscribeAuthStateChanged = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("AUth state changed: ", user);
-      } else {
-        console.log("Auth state changed [Seem user is logged out]");
-      }
-    });
-
-    return () => {
-      unsubscribeAuthStateChanged();
-    }
+    
   })
 
   return (
