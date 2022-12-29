@@ -1,4 +1,4 @@
-import { Box, Button, Flex, FormControl, FormErrorMessage, FormHelperText, FormLabel, Heading, Input, Link, Text } from '@chakra-ui/react'
+import { Box, Button, Flex, FormControl, FormErrorMessage, FormHelperText, FormLabel, Heading, Input, Link, Text, useToast } from '@chakra-ui/react'
 import { Form, Formik } from 'formik'
 import NextLink from 'next/link'
 import React, { useEffect } from 'react'
@@ -6,8 +6,8 @@ import { FaApple, FaGoogle } from 'react-icons/fa'
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../config/firebase.config'
 import { registerUser } from '../features/auth/auth'
-import { useDispatch } from 'react-redux'
-import { AppDispatch } from '../store'
+import { useDispatch, useSelector } from 'react-redux'
+import { AppDispatch, RootState } from '../store'
 
 interface RegistrationValues {
   firstname: string, lastname: string, email: string, phonenumber: string, password: string, password_confirmation: string
@@ -16,28 +16,34 @@ interface RegistrationValues {
 export default function Register() {
 
   const dispatch = useDispatch<AppDispatch>();
+  const { status, user } = useSelector((state: RootState) => state.auth);
+  const toast = useToast();
 
   const handleRegistration = async (values : RegistrationValues) => {
-    dispatch(registerUser({ email: values.email, password: values.password }))
+    dispatch(registerUser({ 
+      email: values.email,
+      firstName: values.firstname,
+      lastName: values.lastname,
+      password: values.password,
+      phoneNumber: values.phonenumber
+     }))
       .unwrap()
       .then((response) => {
         console.log("Login Dispatch Call response: ", response);
+        toast({
+          title: "Account Registration",
+          description: `Registration successful.`,
+          status: "success",
+        })
       })
+      .catch((error) => [
+        toast({
+          title: "Account Registration",
+          description: `${error.message}`,
+          status: "error",
+        })
+      ])
   }
-
-  useEffect(() => {
-    const unsubscribeAuthStateChanged = onAuthStateChanged(auth, (user) => {
-      if (user) {
-        console.log("AUth state changed: ", user);
-      } else {
-        console.log("Auth state changed [Seem user is logged out]");
-      }
-    });
-
-    return () => {
-      unsubscribeAuthStateChanged();
-    }
-  })
 
   return (
     <Flex align="center" justify="center" h={"100vh"}>
@@ -76,7 +82,7 @@ export default function Register() {
                 <Input type='password' name='password_confirmation' placeholder='Confirm Password' value={values.password} onChange={handleChange} onBlur={handleBlur} />
               </FormControl>
 
-              <Button type="submit" variant={'outline'} my={3} width={"full"} colorScheme="green">Sign Up</Button>
+              <Button isLoading={status === "loading"} disabled={status == "loading"} type="submit" variant={'outline'} my={3} width={"full"} colorScheme="green">Sign Up</Button>
             </Form>
           )}
         </Formik>

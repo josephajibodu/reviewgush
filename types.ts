@@ -9,7 +9,13 @@ export interface RegisterData {
   phoneNumber: string;
   email: string;
   password: string;
-  password_confirmation: string;
 }
 
 export type LoadingState = "idle" | "loading" | "failed" | "success";
+
+export interface RGUserProfile {
+  firstName: string;
+  lastName: string;
+  phoneNumber: string;
+  email: string;
+}
