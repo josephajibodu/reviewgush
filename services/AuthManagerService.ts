@@ -1,22 +1,35 @@
+import { RGProfile } from './../types';
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   User,
 } from "firebase/auth";
-import { addDoc, collection } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebase.config";
-import { RegisterData, RGUserProfile } from "../types";
+import { RegisterData, RGUser, RGUserProfile } from "../types";
 
 export default class AuthManagerService {
   static async logUserIn(data: {
     email: string;
     password: string;
-  }): Promise<User | null> {
+  }): Promise<RGUser | null> {
     const { email, password } = data;
     const credentials = await signInWithEmailAndPassword(auth, email, password);
-    console.log("User logged in: ", credentials);
+    const user = credentials.user;
+    const userObj: RGUser = {
+      emailVerified: user.emailVerified,
+      displayName: user.displayName,
+      phoneNumber: user.phoneNumber,
+      email: user.email,
+      uid: user.uid,
+      refreshToken: user.refreshToken,
+      isAnonymous: user.isAnonymous
+    }
 
-    return credentials?.user;
+    console.log("User logged in: ", userObj);
+    
+
+    return userObj;
   }
 
   static logUserOut() {
@@ -26,16 +39,26 @@ export default class AuthManagerService {
   static async registerUser(data: {
     email: string;
     password: string;
-  }): Promise<User | null> {
+  }): Promise<RGUser | null> {
     const { email, password } = data;
     const credentials = await createUserWithEmailAndPassword(
       auth,
       email,
       password
     );
-    console.log("User Signed up already", credentials);
+    const user = credentials.user;
+    const userObj: RGUser = {
+      emailVerified: user.emailVerified,
+      displayName: user.displayName,
+      phoneNumber: user.phoneNumber,
+      email: user.email,
+      uid: user.uid,
+      refreshToken: user.refreshToken,
+      isAnonymous: user.isAnonymous
+    }
+    console.log("User Signed up already", userObj);
 
-    return credentials?.user;
+    return userObj;
   }
 
   static getUser() {
@@ -54,7 +77,12 @@ export default class AuthManagerService {
       lastName,
       phoneNumber,
     });
+  }
 
-    return docRef;
+  static async getUserProfile(userId: string) {
+    const userData = await getDoc(doc(db, "users", userId));
+    console.log("User data fetched", userData);
+    
+    return userData.data as RGProfile;
   }
 }

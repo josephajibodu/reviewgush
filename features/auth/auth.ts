@@ -1,15 +1,18 @@
+import { RGProfile } from './../../types';
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { User } from "firebase/auth";
 import AuthManagerService from "../../services/AuthManagerService";
-import { LoadingState, LoginData, RegisterData } from "../../types";
+import { RootState } from "../../store";
+import { LoadingState, LoginData, RegisterData, RGUser } from "../../types";
 
 export interface AuthState {
-  user: User | null;
+  user: RGUser | null;
+  profile: RGProfile | null;
   status: LoadingState;
 }
 
 const initialState: AuthState = {
   user: null,
+  profile: null,
   status: "idle",
 };
 
@@ -47,6 +50,30 @@ export const registerUser = createAsyncThunk("auth/registerUser", async (data: R
     return rejectWithValue(error);
   }
 });
+
+/**
+ * Update users profile
+ */
+export const updateUserProfile = createAsyncThunk("auth/updateUserProfile",async (data: RegisterData, {rejectWithValue}) => {
+  try {
+    return AuthManagerService.updateProfile(data);
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+})
+
+/**
+ * Get the updated users profile
+ */
+export const fetchUserProfile = createAsyncThunk("auth/fetchUserProfile",async (_, {rejectWithValue, getState}) => {
+  try {
+    const {user, status} = getState() as AuthState;
+
+    return AuthManagerService.getUserProfile(user!.uid);
+  } catch (error) {
+    return rejectWithValue(error);
+  }
+})
 
 export const authSlice = createSlice({
   name: "auth",
@@ -88,6 +115,29 @@ export const authSlice = createSlice({
       state.user = payload;
     });
     builder.addCase(registerUser.rejected, (state, action) => {
+      state.status = "failed";
+    });
+
+    // updateUserProfile Reducer
+    builder.addCase(updateUserProfile.pending, (state, action) => {
+      state.status = "loading";
+    });
+    builder.addCase(updateUserProfile.fulfilled, (state, {payload}) => {
+      state.status = "success";
+    });
+    builder.addCase(updateUserProfile.rejected, (state, action) => {
+      state.status = "failed";
+    });
+
+    // Fetch Users Profile Reducer
+    builder.addCase(fetchUserProfile.pending, (state, action) => {
+      state.status = "loading";
+    });
+    builder.addCase(fetchUserProfile.fulfilled, (state, {payload}) => {
+      state.status = "success";
+      state.profile = payload;
+    });
+    builder.addCase(fetchUserProfile.rejected, (state, action) => {
       state.status = "failed";
     });
 

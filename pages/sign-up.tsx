@@ -5,7 +5,7 @@ import React, { useEffect } from 'react'
 import { FaApple, FaGoogle } from 'react-icons/fa'
 import { createUserWithEmailAndPassword, onAuthStateChanged } from 'firebase/auth'
 import { auth } from '../config/firebase.config'
-import { registerUser } from '../features/auth/auth'
+import { registerUser, updateUserProfile } from '../features/auth/auth'
 import { useDispatch, useSelector } from 'react-redux'
 import { AppDispatch, RootState } from '../store'
 
@@ -29,12 +29,14 @@ export default function Register() {
      }))
       .unwrap()
       .then((response) => {
-        console.log("Login Dispatch Call response: ", response);
+        console.log("Register Dispatch Call response: ", response);
         toast({
           title: "Account Registration",
           description: `Registration successful.`,
           status: "success",
         })
+
+        createAccount(values);
       })
       .catch((error) => [
         toast({
@@ -43,6 +45,22 @@ export default function Register() {
           status: "error",
         })
       ])
+  }
+
+  const createAccount = (values: RegistrationValues) => {
+    dispatch(updateUserProfile({
+      email: values.email,
+      firstName: values.firstname,
+      lastName: values.lastname,
+      phoneNumber: values.phonenumber,
+      password: values.password
+    })).unwrap()
+    .then((response) => {
+      console.log("User profile updated");
+    })
+    .catch((error) => {
+      console.log("Failure updating users profile.")
+    })
   }
 
   return (
