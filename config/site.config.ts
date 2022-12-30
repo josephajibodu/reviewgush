@@ -12,3 +12,5 @@ export const color = {
   primary: "#dd6b20",
   secondary: "#38a169"
 };
+
+export const auth_cache_key = "reviewgush_auth";

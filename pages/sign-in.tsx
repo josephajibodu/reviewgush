@@ -1,5 +1,5 @@
 import { Box, Button, Flex, FormControl, FormErrorMessage, FormHelperText, FormLabel, Heading, Input, Link, Text, useToast } from '@chakra-ui/react'
-import { Form, Formik } from 'formik'
+import { Form, Formik, FormikHelpers } from 'formik'
 import React, { useEffect } from 'react'
 import { FaApple, FaGoogle } from 'react-icons/fa'
 import NextLink from 'next/link'
@@ -20,20 +20,22 @@ export default function Login() {
   const { user, status } = useSelector((state: RootState) => state.auth);
   const toast = useToast();
 
-  const submitLogin = async (values: LoginValues) => {
+  const submitLogin = async (values: LoginValues, {resetForm} : FormikHelpers<LoginValues>) => {
     dispatch(logUserIn({ email: values.email, password: values.password }))
       .unwrap()
       .then((response) => {
         console.log("Login Dispatch Call response: ", response);
         toast({
-          title: "Account Login",
-          description: `Login successful.`,
+          title: "Login Successful",
+          description: `You are logged in.`,
           status: "success",
         })
+        
+        resetForm();
       })
       .catch((error) => {
         toast({
-          title: "Account Login",
+          title: "Login Error",
           description: `${error.message}`,
           status: "error",
         })

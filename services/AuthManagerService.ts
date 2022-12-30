@@ -1,4 +1,4 @@
-import { RGProfile } from "./../types";
+import { CachedUser, RGProfile } from "./../types";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
@@ -12,7 +12,7 @@ export default class AuthManagerService {
   static async logUserIn(data: {
     email: string;
     password: string;
-  }): Promise<RGUser | null> {
+  }): Promise<CachedUser | null> {
     const { email, password } = data;
     const credentials = await signInWithEmailAndPassword(auth, email, password);
     const user = credentials.user;
@@ -25,16 +25,18 @@ export default class AuthManagerService {
       refreshToken: user.refreshToken,
     };
 
+    const userProfile = await this.getUserProfile(user.uid);
+
     console.log("User logged in: ", userObj);
 
-    return userObj;
+    return { user: userObj, profile: userProfile };
   }
 
   static logUserOut() {
     return auth.signOut();
   }
 
-  static async registerUser(data: RegisterData): Promise<RGUser | null> {
+  static async registerUser(data: RegisterData): Promise<CachedUser | null> {
     const { email, password } = data;
     const credentials = await createUserWithEmailAndPassword(
       auth,
@@ -54,8 +56,12 @@ export default class AuthManagerService {
 
     // Update the users collection
     this.createProfile({ ...data, uid: user.uid });
+    const userProfile = await this.getUserProfile(user.uid);
 
-    return userObj;
+    return {
+      user: userObj,
+      profile: userProfile
+    } as CachedUser;
   }
 
   static getUser() {
@@ -94,8 +100,8 @@ export default class AuthManagerService {
 
   static async getUserProfile(userId: string) {
     const userData = await getDoc(doc(db, "users", userId));
-    console.log("User data fetched", userData);
+    // console.log("User data fetched", userData.data());
 
-    return userData.data as RGProfile;
+    return userData.data() as RGProfile;
   }
 }
