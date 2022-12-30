@@ -1,10 +1,10 @@
-import { RGProfile } from './../types';
+import { RGProfile } from "./../types";
 import {
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
   User,
 } from "firebase/auth";
-import { addDoc, collection, doc, getDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, setDoc } from "firebase/firestore";
 import { auth, db } from "../config/firebase.config";
 import { RegisterData, RGUser, RGUserProfile } from "../types";
 
@@ -23,11 +23,9 @@ export default class AuthManagerService {
       email: user.email,
       uid: user.uid,
       refreshToken: user.refreshToken,
-      isAnonymous: user.isAnonymous
-    }
+    };
 
     console.log("User logged in: ", userObj);
-    
 
     return userObj;
   }
@@ -36,10 +34,7 @@ export default class AuthManagerService {
     return auth.signOut();
   }
 
-  static async registerUser(data: {
-    email: string;
-    password: string;
-  }): Promise<RGUser | null> {
+  static async registerUser(data: RegisterData): Promise<RGUser | null> {
     const { email, password } = data;
     const credentials = await createUserWithEmailAndPassword(
       auth,
@@ -54,9 +49,11 @@ export default class AuthManagerService {
       email: user.email,
       uid: user.uid,
       refreshToken: user.refreshToken,
-      isAnonymous: user.isAnonymous
-    }
+    };
     console.log("User Signed up already", userObj);
+
+    // Update the users collection
+    this.createProfile({ ...data, uid: user.uid });
 
     return userObj;
   }
@@ -69,20 +66,36 @@ export default class AuthManagerService {
     return !!auth.currentUser;
   }
 
-  static async updateProfile(data: RegisterData) {
-    const { email, firstName, lastName, phoneNumber } = data;
-    const docRef = await addDoc(collection(db, "users"), {
+  static async createProfile(data: RegisterData & { uid: string }) {
+    const { email, fullName, phoneNumber, uid } = data;
+    await setDoc(doc(db, "users", uid), {
       email,
-      firstName,
-      lastName,
       phoneNumber,
+      fullName,
+      uid,
+      plan: "free",
     });
+  }
+
+  static async updateProfile(data: RegisterData) {
+    const { email, fullName, phoneNumber } = data;
+    const docRef = await doc(db, "users", "");
+
+    setDoc(
+      docRef,
+      {
+        email,
+        phoneNumber,
+        fullName,
+      },
+      { merge: true }
+    );
   }
 
   static async getUserProfile(userId: string) {
     const userData = await getDoc(doc(db, "users", userId));
     console.log("User data fetched", userData);
-    
+
     return userData.data as RGProfile;
   }
 }

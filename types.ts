@@ -6,8 +6,7 @@ export interface LoginData {
 }
 
 export interface RegisterData {
-  firstName: string;
-  lastName: string;
+  fullName: string;
   phoneNumber: string;
   email: string;
   password: string;
@@ -16,10 +15,10 @@ export interface RegisterData {
 export type LoadingState = "idle" | "loading" | "failed" | "success";
 
 export interface RGUserProfile {
-  firstName: string;
-  lastName: string;
+  fullName: string;
   phoneNumber: string;
   email: string;
+  plan: string;
 }
 
 export interface RGUser {
@@ -28,10 +27,12 @@ export interface RGUser {
   phoneNumber: string | null;
   displayName: string | null;
   emailVerified: boolean;
-  isAnonymous: boolean;
   refreshToken: string;
 }
 
-export interface RGProfile {
+export interface RGProfile {}
 
+export interface CachedUser {
+  user: RGUser;
+  profile: RGProfile;
 }

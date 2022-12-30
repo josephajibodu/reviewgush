@@ -1,5 +1,5 @@
-import { RGProfile } from './../../types';
-import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
+import { RGProfile, CachedUser } from './../../types';
+import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import AuthManagerService from "../../services/AuthManagerService";
 import { RootState } from "../../store";
 import { LoadingState, LoginData, RegisterData, RGUser } from "../../types";
@@ -56,7 +56,7 @@ export const registerUser = createAsyncThunk("auth/registerUser", async (data: R
  */
 export const updateUserProfile = createAsyncThunk("auth/updateUserProfile",async (data: RegisterData, {rejectWithValue}) => {
   try {
-    return AuthManagerService.updateProfile(data);
+    // return AuthManagerService.updateProfile(data);
   } catch (error) {
     return rejectWithValue(error);
   }
@@ -78,7 +78,12 @@ export const fetchUserProfile = createAsyncThunk("auth/fetchUserProfile",async (
 export const authSlice = createSlice({
   name: "auth",
   initialState,
-  reducers: {},
+  reducers: {
+    logUserInFromCache: (state, action: PayloadAction<CachedUser>) => {
+      state.user = action.payload.user;
+      state.profile = action.payload.profile;
+    }
+  },
   extraReducers: (builder) => {
 
     // logUserIn Reducer
@@ -100,6 +105,8 @@ export const authSlice = createSlice({
     });
     builder.addCase(logUserOut.fulfilled, (state, action) => {
       state.status = "success";
+      state.user = null;
+      state.profile = null;
     });
     builder.addCase(logUserOut.rejected, (state, action) => {
       state.status = "failed";
@@ -136,6 +143,8 @@ export const authSlice = createSlice({
     builder.addCase(fetchUserProfile.fulfilled, (state, {payload}) => {
       state.status = "success";
       state.profile = payload;
+
+      window.localStorage.setItem("authenticated_user", JSON.stringify({user: state.user, profile: payload}))
     });
     builder.addCase(fetchUserProfile.rejected, (state, action) => {
       state.status = "failed";
@@ -144,3 +153,5 @@ export const authSlice = createSlice({
 
   },
 });
+
+export const { logUserInFromCache } = authSlice.actions;

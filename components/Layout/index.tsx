@@ -1,10 +1,14 @@
 import { Box } from '@chakra-ui/react'
 import Head from 'next/head'
-import React from 'react'
+import React, { useEffect } from 'react'
 import Footer from './Footer'
 import Header from './Header'
 import * as siteConfig from '../../config/site.config'
 import LoadingBar from 'react-top-loading-bar'
+import { CachedUser } from '../../types'
+import { logUserInFromCache } from '../../features/auth/auth'
+import { useDispatch } from 'react-redux'
+import { AppDispatch } from '../../store'
 
 export default function Layout({ children }: { children: JSX.Element }) {
   const color = "##FFFFFF";
@@ -15,6 +19,19 @@ export default function Layout({ children }: { children: JSX.Element }) {
   const og_image = `${url}/icons/512.png`;
   const { primary, secondary } = siteConfig.color;
 
+  // 
+  const dispatch = useDispatch<AppDispatch>();
+
+  useEffect(() => {
+
+    let saved_user_obj = window.localStorage.getItem("authenticated_user");
+
+    if (saved_user_obj !== null) {
+      const full_user = JSON.parse(saved_user_obj) as CachedUser;
+      dispatch(logUserInFromCache(full_user));
+    }
+
+  }, []);
 
   return (
     <Box>
