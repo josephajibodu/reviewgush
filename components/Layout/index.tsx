@@ -24,7 +24,7 @@ export default function Layout({ children }: { children: JSX.Element }) {
 
   useEffect(() => {
 
-    let saved_user_obj = window.localStorage.getItem("authenticated_user");
+    let saved_user_obj = window.localStorage.getItem(siteConfig.auth_cache_key);
 
     if (saved_user_obj !== null) {
       const full_user = JSON.parse(saved_user_obj) as CachedUser;
