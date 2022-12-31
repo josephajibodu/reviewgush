@@ -2,7 +2,7 @@
  * This file contains the configuration used for customising the website.
  */
 
-export const title = "The Rock Star IND";
+export const title = "ReviewGush - Simplifying and Streamlining the process of collecting and displaying customer reviews.";
 
 export const datetimeFormat = "DD-MMM-YYYY";
 
