@@ -6,11 +6,13 @@ import ThreeStrokes from './BackgroundPatterns/ThreeStrokes'
 export default function NewsletterBox({ ...props }: StackProps) {
   const toast = useToast();
   const [emailAddress, setEmailAddress] = useState<string>();
-  const [fullName, setFullName] = useState<string>();
+  const [firstName, setFirstName] = useState<string>();
+  const [lastName, setLastName] = useState<string>();
 
-  const handleSubscriptionRequest = async (data: { email: string, fullname: string }) => {
+  const handleSubscriptionRequest = async (data: { email: string, firstname: string, lastname: string }) => {
+    const  { email, firstname, lastname } = data;
     const response = await fetch(`/api/get-notified`, {
-      body: JSON.stringify({ email: emailAddress, fullname: fullName }),
+      body: JSON.stringify({ email, firstname, lastname  }),
       headers: {
         'Content-Type': 'application/json'
       },
@@ -46,10 +48,21 @@ export default function NewsletterBox({ ...props }: StackProps) {
       });
     }
 
-    if (!fullName) {
+    if (!firstName) {
       return toast({
         title: "Ooops!",
-        description: "Your full name is required.",
+        description: "First name is required.",
+        status: "error",
+        isClosable: true,
+        duration: 5000,
+        position: 'top'
+      });
+    }
+
+    if (!lastName) {
+      return toast({
+        title: "Ooops!",
+        description: "Last name is required.",
         status: "error",
         isClosable: true,
         duration: 5000,
@@ -58,7 +71,7 @@ export default function NewsletterBox({ ...props }: StackProps) {
     }
 
     try {
-      await mutateAsync({ email: emailAddress, fullname: fullName });
+      await mutateAsync({ email: emailAddress, firstname: firstName, lastname: lastName });
 
       toast({
         title: "Email Subscribed",
@@ -70,6 +83,8 @@ export default function NewsletterBox({ ...props }: StackProps) {
       });
 
       setEmailAddress("");
+      setFirstName("");
+      setLastName("");
 
     } catch (error) {
       console.log(error);
