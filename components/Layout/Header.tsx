@@ -105,15 +105,13 @@ export default function Header() {
             user ?
               <Button
                 leftIcon={<FaUser />}
-                as={'a'}
                 variant="outline"
                 display={{ base: 'none', md: 'inline-flex' }}
                 fontSize={'sm'}
                 fontWeight={600}
                 rounded={'xl'}
                 minH={10} minW={24}
-                _hover={{ bg: 'orange.500', color: 'white' }}
-                href={'#get-started'}
+                _hover={{ bg: 'green.400', color: 'white' }}
                 onClick={handleLogout}
               >
                 Log Out

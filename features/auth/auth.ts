@@ -127,6 +127,8 @@ export const authSlice = createSlice({
       state.status = "success";
       state.user = null;
       state.profile = null;
+
+      window.localStorage.removeItem(auth_cache_key);
     });
     builder.addCase(logUserOut.rejected, (state, action) => {
       state.status = "failed";
