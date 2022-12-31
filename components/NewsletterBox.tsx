@@ -8,10 +8,9 @@ export default function NewsletterBox({ ...props }: StackProps) {
   const [emailAddress, setEmailAddress] = useState<string>();
   const [fullName, setFullName] = useState<string>();
 
-  const handleSubscriptionRequest = async (data: { email: string }) => {
-
+  const handleSubscriptionRequest = async (data: { email: string, fullname: string }) => {
     const response = await fetch(`/api/get-notified`, {
-      body: JSON.stringify({ email: emailAddress }),
+      body: JSON.stringify({ email: emailAddress, fullname: fullName }),
       headers: {
         'Content-Type': 'application/json'
       },
@@ -47,8 +46,19 @@ export default function NewsletterBox({ ...props }: StackProps) {
       });
     }
 
+    if (!fullName) {
+      return toast({
+        title: "Ooops!",
+        description: "Your full name is required.",
+        status: "error",
+        isClosable: true,
+        duration: 5000,
+        position: 'top'
+      });
+    }
+
     try {
-      await mutateAsync({ email: emailAddress });
+      await mutateAsync({ email: emailAddress, fullname: fullName });
 
       toast({
         title: "Email Subscribed",
@@ -82,13 +92,15 @@ export default function NewsletterBox({ ...props }: StackProps) {
       <Heading fontSize='12px' color='white' textTransform='uppercase'>Enjoy 30 days free pro trial </Heading>
       <Heading fontSize='4xl' color='white' mb={"4"}>Join Our Waitlist</Heading>
       <Text color='white.600'>Be the first to receive the good news from us when we launch. For the first 100 signups, we are giving out 30 days free trial for our pro subscriptions.</Text>
-      <Flex as={'form'} onSubmit={subscribeToNewsletter} pos='relative' align='center' minWidth='300px' maxWidth='lg' marginTop='6'>
-        <Input type={"text"} required value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder='Full Name' outline='0' minHeight='12' mr={["0", "4 "]} border='2px' borderColor='gray.300' _placeholder={{ color: 'gray.200' }} focusBorderColor='gray.300' />
-        <Input type={"email"} required value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} placeholder='Enter your email' outline='0' minHeight='12' pr='32' border='2px' borderColor='gray.300' _placeholder={{ color: 'gray.200' }} focusBorderColor='gray.300' />
-        <Button type='submit' pos='absolute' right='1' bgColor='orange.500' _hover={{ bgColor: 'orange.600' }} zIndex="20">
-          {isLoading && <CircularProgress isIndeterminate value={100} size='24px' color={"green.300"} m={"4"} />}
-          {!isLoading &&  'Sign Me Up'}
-        </Button>
+      <Flex as={'form'} onSubmit={subscribeToNewsletter} direction={["column", "row"]} pos='relative' align='center' marginTop='6' >
+        <Input type="text" autoComplete='fullname' id="fullName" name="fullName" required value={fullName} onChange={(e) => setFullName(e.target.value)} placeholder='Full Name' outline='0' minHeight='12' mr={["0", "4 "]} mb={["4", "0"]} border='2px' borderColor='gray.300' _placeholder={{ color: 'gray.200' }} focusBorderColor='gray.300' flexGrow={["1"]} />
+        <Flex minWidth='300px' maxWidth='lg' align='center'>
+          <Input type={"email"} required value={emailAddress} onChange={(e) => setEmailAddress(e.target.value)} placeholder='Enter your email' outline='0' minHeight='12' pr='32' border='2px' borderColor='gray.300' _placeholder={{ color: 'gray.200' }} focusBorderColor='gray.300' />
+          <Button type='submit' pos='absolute' right='1' bgColor='orange.500' _hover={{ bgColor: 'orange.600' }} zIndex="20">
+            {isLoading && <CircularProgress isIndeterminate value={100} size='24px' color={"green.300"} m={"4"} />}
+            {!isLoading && 'Join Waitlist'}
+          </Button>
+        </Flex>
       </Flex>
       <ThreeStrokes pos='absolute' transform='rotate(45deg)' bottom='60%' left='85%' />
       <ThreeStrokes pos='absolute' transform='rotate(45deg)' top='60%' right='85%' />
