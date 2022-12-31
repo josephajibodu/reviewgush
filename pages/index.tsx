@@ -77,7 +77,7 @@ const Home: NextPage = () => {
             <Checklist as='li'>Collect Text, pictures and videos</Checklist>
             <Checklist as='li'>Easily embed on your website</Checklist>
           </UnorderedList>
-          <Link href='#' color='green.400'>Learn More</Link>
+          <Link href='#get-started' color='green.400'>Learn More</Link>
         </ChakraBox>
         {/* @ts-ignore no problem in operation, although type error appears. */}
         <ChakraBox transition={{ duration: 0.8 }} initial={{ translateY: 50, opacity: 0 }} whileInView={{ translateY: 0, opacity: 1 }} width={['100%', '40%']}>
@@ -99,7 +99,7 @@ const Home: NextPage = () => {
             <Checklist as='li'>You can easily import testimonials from social media and review sites</Checklist>
             <Checklist as='li'>You can download reviews and export them in different formats</Checklist>
           </UnorderedList>
-          <Link href='#' color='green.400'>Learn More</Link>
+          <Link href='#get-started' color='green.400'>Learn More</Link>
         </ChakraBox>
       </Stack>
 
@@ -113,7 +113,7 @@ const Home: NextPage = () => {
             <Checklist as='li'>Easily shareable in various formats, including pictures</Checklist>
             <Checklist as='li'>Curate reviews from all your social media platforms into a wall of love to increase conversions</Checklist>
           </UnorderedList>
-          <Link href='#' color='green.400'>Learn More</Link>
+          <Link href='#get-started' color='green.400'>Learn More</Link>
         </ChakraBox>
         {/* @ts-ignore no problem in operation, although type error appears. */}
         <ChakraBox transition={{ duration: 0.8 }} initial={{ translateY: 50, opacity: 0 }} whileInView={{ translateY: 0, opacity: 1 }} width={['100%', '40%']}>
