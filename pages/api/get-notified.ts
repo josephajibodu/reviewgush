@@ -19,7 +19,7 @@ const handler =  async (req: NextApiRequest, res: NextApiResponse) => {
 
   const { email, firstname, lastname } = req.body;
 
-  console.log({ email, firstname, lastname });
+  // console.log({ email, firstname, lastname });
 
   if (!email) {
     return res.status(400).json({ error: 'Email is required' });
