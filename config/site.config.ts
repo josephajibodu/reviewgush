@@ -6,7 +6,7 @@ export const title = "ReviewGush - Simplifying and Streamlining the process of c
 
 export const datetimeFormat = "DD-MMM-YYYY";
 
-export const app_url = "http://localhost:3000";
+export const app_url = "https://reviewgush.com";
 
 export const color = {
   primary: "#dd6b20",
