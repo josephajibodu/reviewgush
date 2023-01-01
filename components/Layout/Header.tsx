@@ -15,6 +15,7 @@ import {
   useBreakpointValue,
   useDisclosure,
   Heading,
+  useToast,
 } from '@chakra-ui/react';
 import {
   HamburgerIcon,
@@ -22,10 +23,37 @@ import {
   ChevronDownIcon,
   ChevronRightIcon,
 } from '@chakra-ui/icons';
+import { FaUser } from 'react-icons/fa';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppDispatch, RootState } from '../../store';
+import { logUserOut } from '../../features/auth/auth';
 
 export default function Header() {
   const { isOpen, onToggle } = useDisclosure();
+  const dispatch = useDispatch<AppDispatch>();
+  const toast = useToast();
+  const { user, status } = useSelector((state: RootState) => state.auth);
 
+  const handleLogout = () => {
+    dispatch(logUserOut())
+      .unwrap()
+      .then((response) => {
+        console.log("User logged out", response);
+        toast({
+          title: "Hey!",
+          "description": "You have been logged out.",
+          "status": "info"
+        });
+      })
+      .catch((error) => {
+        console.log("Logout eror occured: ", error);
+        toast({
+          title: "Oops",
+          "description": "Logout operation unsuccessful",
+          "status": "error"
+        })
+      })
+  }
   return (
     <Box>
       <Flex
@@ -73,20 +101,37 @@ export default function Header() {
           direction={'row'}
           spacing={6}>
 
-          <Button
-            as={'a'}
-            display={{ base: 'none', md: 'inline-flex' }}
-            fontSize={'sm'}
-            fontWeight={600}
-            rounded={'xl'}
-            minH={12} minW={24}
-            bg="orange.500"
-            color='white'
-            _hover={{ bg: 'orange.600' }}
-            href={'#get-started'}
-          >
-            Get Started
-          </Button>
+          {
+            user ?
+              <Button
+                leftIcon={<FaUser />}
+                variant="outline"
+                display={{ base: 'none', md: 'inline-flex' }}
+                fontSize={'sm'}
+                fontWeight={600}
+                rounded={'xl'}
+                minH={10} minW={24}
+                _hover={{ bg: 'green.400', color: 'white' }}
+                onClick={handleLogout}
+              >
+                Log Out
+              </Button>
+              :
+              <Button
+                as={'a'}
+                display={{ base: 'none', md: 'inline-flex' }}
+                fontSize={'sm'}
+                fontWeight={600}
+                rounded={'xl'}
+                minH={10} minW={24}
+                bg="orange.500"
+                color='white'
+                _hover={{ bg: 'orange.600' }}
+                href={'#get-started'}
+              >
+                Get Started
+              </Button>
+          }
         </Stack>
       </Flex>
 
@@ -249,21 +294,21 @@ interface NavItem {
 }
 
 const NAV_ITEMS: Array<NavItem> = [
-  {
-    label: 'Inspiration',
-    children: [
-      {
-        label: 'Explore Design Work',
-        subLabel: 'Trending Design to inspire you',
-        href: '#',
-      },
-      {
-        label: 'New & Noteworthy',
-        subLabel: 'Up-and-coming Designers',
-        href: '#',
-      },
-    ],
-  },
+  // {
+  //   label: 'Inspiration',
+  //   children: [
+  //     {
+  //       label: 'Explore Design Work',
+  //       subLabel: 'Trending Design to inspire you',
+  //       href: '#',
+  //     },
+  //     {
+  //       label: 'New & Noteworthy',
+  //       subLabel: 'Up-and-coming Designers',
+  //       href: '#',
+  //     },
+  //   ],
+  // },
   // {
   //   label: 'Find Work',
   //   children: [

@@ -17,12 +17,20 @@ type ResponseType<T, E> = {
 const handler =  async (req: NextApiRequest, res: NextApiResponse) => {
   if (req.method != 'POST') return res.status(400).json({ message: `${req.method} request not allowed. Only POST request is allowed.`});
 
-  const { email } = req.body;
+  const { email, firstname, lastname } = req.body;
 
-  console.log({ email });
+  // console.log({ email, firstname, lastname });
 
   if (!email) {
     return res.status(400).json({ error: 'Email is required' });
+  }
+
+  if (!firstname) {
+    return res.status(400).json({ error: 'First Name is required' });
+  }
+
+  if (!lastname) {
+    return res.status(400).json({ error: 'Last Name is required' });
   }
 
   try {
@@ -31,6 +39,10 @@ const handler =  async (req: NextApiRequest, res: NextApiResponse) => {
     const DATACENTER = process.env.MAILCHIMP_API_SERVER;
     
     const data = {
+      merge_fields: {
+        FNAME: firstname,
+        LNAME: lastname
+      },
       email_address: email,
       status: 'subscribed',
     };
